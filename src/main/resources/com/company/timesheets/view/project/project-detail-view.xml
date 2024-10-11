@@ -7,14 +7,10 @@
                   class="com.company.timesheets.entity.Project">
             <fetchPlan extends="_base">
                 <property name="client" fetchPlan="_base"/>
-                <property name="tasks" fetchPlan="_base">
-                    <property name="type" fetchPlan="_instance_name"/>
-                </property>
                 <property name="participants" fetchPlan="_base">
                     <property name="role" fetchPlan="_base"/>
                 </property>
             </fetchPlan>
-            <collection id="tasksDc" property="tasks"/>
             <collection id="participantsDc" property="participants"/>
             <loader/>
         </instance>
@@ -26,12 +22,25 @@
             </loader>
             <fetchPlan extends="_base"/>
         </collection>
+
+        <collection id="tasksDc" class="com.company.timesheets.entity.Task">
+            <fetchPlan extends="_base">
+                <property name="type" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="tasksDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from ts_Task e where e.project = :container_projectDc]]>
+                </query>
+            </loader>
+        </collection>
+
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
     </facets>
     <actions>
-        <action id="saveAction" type="detail_saveClose"/>
+        <action id="saveCloseAction" type="detail_saveClose"/>
+        <action id="saveAction" type="detail_save"/>
         <action id="closeAction" type="detail_close"/>
     </actions>
 
@@ -66,6 +75,7 @@
                         <button id="taskCreateBtn" action="tasksDataGrid.create"/>
                         <button id="taskEditBtn" action="tasksDataGrid.edit"/>
                         <button id="taskRemoveBtn" action="tasksDataGrid.remove"/>
+                        <simplePagination id="tasksPagination" dataLoader="tasksDl"/>
                     </hbox>
                     <dataGrid id="tasksDataGrid"
                               dataContainer="tasksDc"
@@ -125,7 +135,8 @@
         </tabSheet>
 
         <hbox id="detailActions">
-            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="saveAndCloseBtn" action="saveCloseAction"/>
+            <button id="saveBtn" action="saveAction"/>
             <button id="closeBtn" action="closeAction"/>
         </hbox>
     </layout>

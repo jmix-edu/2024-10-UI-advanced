@@ -41,13 +41,15 @@
                     <actionItem id="showUserSubstitutionsItem" ref="usersDataGrid.showUserSubstitutions"/>
                 </items>
             </dropdownButton>
+            <button id="sendEmailBtn" action="usersDataGrid.sendEmail"/>
             <simplePagination id="pagination" dataLoader="usersDl"/>
         </hbox>
         <dataGrid id="usersDataGrid"
                   width="100%"
                   columnReorderingAllowed="true"
                   minHeight="20em"
-                  dataContainer="usersDc">
+                  dataContainer="usersDc"
+                  selectionMode="MULTI">
             <actions>
                 <action id="create" type="list_create"/>
                 <action id="edit" type="list_edit"/>
@@ -56,6 +58,7 @@
                 <action id="changePassword" type="sec_changePassword"/>
                 <action id="resetPassword" type="sec_resetPassword"/>
                 <action id="showUserSubstitutions" type="sec_showUserSubstitutions"/>
+                <action id="sendEmail" text="msg://sendEmail.text" icon="PAPERPLANE_O"/>
             </actions>
             <columns resizable="true">
                 <column property="username"/>

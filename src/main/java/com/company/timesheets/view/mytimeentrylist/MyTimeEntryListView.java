@@ -3,6 +3,8 @@ package com.company.timesheets.view.mytimeentrylist;
 
 import com.company.timesheets.app.TimeEntrySupport;
 import com.company.timesheets.entity.TimeEntry;
+import com.company.timesheets.view.timeentry.TimeEntryDetailView;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 import io.jmix.flowui.DialogWindows;
 import io.jmix.flowui.component.grid.DataGrid;
@@ -31,8 +33,23 @@ public class MyTimeEntryListView extends StandardView {
 
         TimeEntry copiedEntity = timeEntrySupport.copy(selectedItem);
 
-        dialogWindows.detail(timeEntriesDataGrid)
+        DialogWindow<TimeEntryDetailView> dialogWindow = dialogWindows.detail(timeEntriesDataGrid)
+                .withViewClass(TimeEntryDetailView.class)
                 .newEntity(copiedEntity)
-                .open();
+                .build();
+
+        dialogWindow.getView().setOwnTimeEntry(true);
+        dialogWindow.open();
     }
+
+    @Install(to = "timeEntriesDataGrid.create", subject = "queryParametersProvider")
+    private QueryParameters timeEntriesDataGridCreateQueryParametersProvider() {
+        return QueryParameters.of(TimeEntryDetailView.PARAMETER_OWN_TIME_ENTRY, "");
+    }
+
+    @Install(to = "timeEntriesDataGrid.edit", subject = "queryParametersProvider")
+    private QueryParameters timeEntriesDataGridEditQueryParametersProvider() {
+        return QueryParameters.of(TimeEntryDetailView.PARAMETER_OWN_TIME_ENTRY, "");
+    }
+
 }
