@@ -50,7 +50,7 @@
         <details id="contactInformationDetails"
                  summaryText="msg://contactInformationDetails.summary"
                  width="100%"
-                 opened="true">
+                 opened="true" themeNames="non-collapsible summary-filled bordered">
             <formLayout id="contactInformationForm" dataContainer="contactInformationDc">
                 <responsiveSteps>
                     <responsiveStep minWidth="0" columns="1"/>

@@ -77,7 +77,7 @@
             </textField>
             <select id="statusField" property="status"/>
             <textArea id="descriptionField" property="description"
-                      height="9.5em" colspan="2">
+                      height="9.5em" colspan="2" classNames="bordered">
                 <prefix>
                     <icon icon="COMMENT"/>
                 </prefix>
